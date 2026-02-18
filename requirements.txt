@@ -1,7 +1,7 @@
-torch
 pandas
 numpy
-scikit-learn
+torch
 yfinance
+scikit-learn
 matplotlib
-ta
+joblib

@@ -6,17 +6,18 @@ class MultiStockTransformer(nn.Module):
     def __init__(self,
                  input_dim,
                  num_stocks,
+                 sequence_length=30,
                  d_model=64,
                  nhead=4,
                  num_layers=2,
                  dropout=0.1):
 
         super().__init__()
+        self.sequence_length = sequence_length
 
         self.feature_embedding = nn.Linear(input_dim, d_model)
         self.stock_embedding = nn.Embedding(num_stocks, d_model)
-
-        self.positional_encoding = nn.Parameter(torch.randn(1, 30, d_model))
+        self.positional_encoding = nn.Parameter(torch.randn(1, self.sequence_length, d_model))
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model,
@@ -49,5 +50,4 @@ class MultiStockTransformer(nn.Module):
 
         x = self.fc(x)
         x = self.tanh(x)
-        return x.squeeze()
-
+        return x.squeeze(-1)

@@ -23,7 +23,7 @@ def download_data(ticker,
         df.columns = df.columns.get_level_values(0)
 
     df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
-    df.dropna(inplace=True)
+    df = df.dropna()
 
     if save:
         df.to_csv(filepath)
